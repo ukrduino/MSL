@@ -9,7 +9,15 @@ file = open("MSL.csv", "w")
 out = csv.writer(file, delimiter=',', quoting=csv.QUOTE_NONE)
 # пишем заголовочную строку
 out.writerow(["game_number", "day", "month", "year", "ball_1", "ball_2", "ball_3", "ball_4", "ball_5", "ball_6",
-              "super_ball"])
+              "super_ball",
+              "MEGA_JACK_POT_WINNERS", "MEGA_JACK_POT_SUMM",
+              "MEGA_PRISE_WINNERS", "MEGA_PRISE_SUMM",
+              "5_plus_MegaBall_WINNERS", "5_plus_MegaBall_SUMM",
+              "5_Balls_WINNERS", "5_Balls_SUMM",
+              "4_plus_MegaBall_WINNERS", "4_plus_MegaBall_SUMM",
+              "4_Balls_WINNERS", "4_Balls_SUMM",
+              "3_plus_MegaBall_WINNERS", "3_plus_MegaBall_SUMM",
+              "3_Balls_WINNERS", "3_Balls_SUMM"])
 
 
 # получаем данные с сайта
@@ -48,7 +56,7 @@ def month_to_numb(month=None):
         return 0
 
 # обходим все страницы
-for page_number in range(471, 1411):
+for page_number in range(470, 1411):
     # если удалось получить данные то переходим вниз
     try:
         request_data = get_data_from_site(page_number)
@@ -84,6 +92,22 @@ for page_number in range(471, 1411):
         balls.insert(1, text_list[4])
         balls.insert(2, month_to_numb(text_list[5][:3]))
         balls.insert(3, text_list[6])
-        print(balls)
+        table = soup.find_all("td")
+        table_text = []
+        for tab in table:
+            table_text.append(tab.findAll(text=True))
+        append_list = [table_text[1][0], table_text[2][0], #"MEGA_JACK_POT_WINNERS", "MEGA_JACK_POT_SUMM"
+                       table_text[4][0], table_text[5][0], #"MEGA_PRISE_WINNERS", "MEGA_PRISE_SUMM"
+                       table_text[7][0], table_text[8][0], #"5_plus_MegaBall_WINNERS", "5_plus_MegaBall_SUMM"
+                       table_text[10][0], table_text[11][0], #"5_Balls_WINNERS", "5_Balls_SUMM"
+                       table_text[13][0], table_text[14][0], #"4_plus_MegaBall_WINNERS", "4_plus_MegaBall_SUMM"
+                       table_text[16][0], table_text[17][0], #"4_Balls_WINNERS", "4_Balls_SUMM"
+                       table_text[19][0], table_text[20][0], #"3_plus_MegaBall_WINNERS", "3_plus_MegaBall_SUMM"
+                       table_text[22][0], table_text[23][0]] #"3_Balls_WINNERS", "3_Balls_SUMM"
+
+        for win_data in append_list:
+            win_data_str = win_data.string.replace(" ", "")
+            balls.append(win_data_str)
+        # print(balls)
         out.writerow(balls)
 
