@@ -45,7 +45,7 @@ odd3_even3 = ball_combinations(3, 21) * ball_combinations(3, 21)
 # print("Проверка 2 %s = %s" % (comb, odd3_even3 + (odd_even + odd5_even1 + odd4_even2) * 2))
 
 
-#TODO - общая сумма шаров (126-167)
+
 #TODO - четные и нечетные (30%)
 #TODO - большие и малые группы чисел (1:21 22:42)(2:4, 4:2)
 #TODO - повторяющиеся числа (47%)

@@ -1,3 +1,4 @@
+#TODO - частота выпадение шаров
 # http://stackoverflow.com/questions/18204134/install-python-numpy-in-the-virtualenv-environment
 from pandas import *
 import numpy as np
@@ -24,7 +25,6 @@ for iii in range(1, 43):
 
 file.close()
 
-#TODO - частота выпадение шаров
 
 win_balls = pandas.read_csv('win_balls.csv', header=0)
 descending_win_balls = win_balls.sort(["win_times"], ascending=[False])
