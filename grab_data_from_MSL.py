@@ -56,7 +56,8 @@ def month_to_numb(month=None):
         return 0
 
 # обходим все страницы
-for page_number in range(470, 1411):
+for page_number in range(470, 1500):
+    print(page_number)
     # если удалось получить данные то переходим вниз
     try:
         request_data = get_data_from_site(page_number)
