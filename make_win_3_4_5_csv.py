@@ -7,6 +7,7 @@ import numpy as np
 import csv
 # https://docs.python.org/3.4/library/itertools.html#itertools.combinations/
 from itertools import combinations
+from unique_list import unique_list_of_combinations as unique_list
 
 # загружаем файл с данными розиграшей
 lottery = np.genfromtxt("MSL.csv", delimiter=",", dtype=np.int32)
@@ -83,10 +84,7 @@ win_balls_6 = pandas.read_csv('win_balls_6.csv', header=0)
 descending_win_balls_6 = win_balls_6.sort(["win_times"], ascending=[False])
 descending_win_balls_6.to_csv('win_balls_6.csv', index=False)
 
-# ------------------------------------------------------------------------
-#3. списки комбинаций образованных  из выиграшных "6"
-
-# Список комбинаций по 5 шаров образованных  из выиграшных "6"
+# ----------------- Список комбинаций по 5 шаров образованных  из выиграшных "6"
 for comb in win_balls_6_comb_list:
     win_5_balls_combinations = combinations(comb, 5)
     for win_5_balls_combination in win_5_balls_combinations:
@@ -95,21 +93,21 @@ for comb in win_balls_6_comb_list:
             win_5_balls_lst.append(ball)
         win_balls_5_comb_list.append(win_5_balls_lst)
 
+# количество комбинаций в первичном списке
+print("win_balls_5_comb_list - %s" % len(win_balls_5_comb_list))
+# удаление дубликатов комбинаций
+win_balls_5_comb_list = unique_list(win_balls_5_comb_list)
+# количество комбинаций в уникальном списке
+print("win_balls_5_comb_list уменьшен до - %s" % len(win_balls_5_comb_list))
 
 # Файл со списком комбинаций по 5 шара образованных  из выиграшных "6"
 file5 = open("win_balls_5.csv", "w")
 out5 = csv.writer(file5, delimiter=',', quoting=csv.QUOTE_NONE)
 out5.writerow(["ball_1", "ball_2", "ball_3", "ball_4", "ball_5", "win_times"])
 
-# Пишем в файл комбинацию, количество раз ее выпадения
+# Пишем в файл
 for comb in win_balls_5_comb_list:
-    csv_row = []
-    for i in comb:
-        csv_row.append(i)
-    csv_row.append(win_balls_5_comb_list.count(comb))
-    # нужна нормализация
-    # csv_row.append(win_balls_3_comb_list.count(comb)/len(win_balls_3_comb_list * 100))]
-    out5.writerow(csv_row)
+    out5.writerow(comb)
 
 file5.close()
 
@@ -118,8 +116,7 @@ win_balls_5 = pandas.read_csv('win_balls_5.csv', header=0)
 descending_win_balls_5 = win_balls_5.sort(["win_times"], ascending=[False])
 descending_win_balls_5.to_csv('win_balls_5.csv', index=False)
 
-# ------------------------
-# Список комбинаций по 4 шара образованных  из выиграшных "6"
+# ------------------------ Список комбинаций по 4 шара образованных  из выиграшных "6"
 for comb in win_balls_6_comb_list:
     win_4_balls_combinations = combinations(comb, 4)
     for win_4_balls_combination in win_4_balls_combinations:
@@ -129,20 +126,21 @@ for comb in win_balls_6_comb_list:
         win_balls_4_comb_list.append(win_4_balls_lst)
 
 
+# количество комбинаций в первичном списке
+print("win_balls_4_comb_list - %s" % len(win_balls_4_comb_list))
+# удаление дубликатов комбинаций
+win_balls_4_comb_list = unique_list(win_balls_4_comb_list)
+# количество комбинаций в уникальном списке
+print("win_balls_4_comb_list уменьшен до - %s" % len(win_balls_4_comb_list))
+
 # Файл со списком комбинаций по 4 шара образованных  из выиграшных "6"
 file4 = open("win_balls_4.csv", "w")
 out4 = csv.writer(file4, delimiter=',', quoting=csv.QUOTE_NONE)
 out4.writerow(["ball_1", "ball_2", "ball_3", "ball_4", "win_times"])
 
-# Пишем в файл комбинацию, количество раз ее выпадения
+# Пишем в файл
 for comb in win_balls_4_comb_list:
-    csv_row = []
-    for i in comb:
-        csv_row.append(i)
-    csv_row.append(win_balls_4_comb_list.count(comb))
-    # нужна нормализация
-    # csv_row.append(win_balls_3_comb_list.count(comb)/len(win_balls_3_comb_list * 100))]
-    out4.writerow(csv_row)
+    out4.writerow(comb)
 
 file4.close()
 
@@ -151,8 +149,7 @@ win_balls_4 = pandas.read_csv('win_balls_4.csv', header=0)
 descending_win_balls_4 = win_balls_4.sort(["win_times"], ascending=[False])
 descending_win_balls_4.to_csv('win_balls_4.csv', index=False)
 
-# ------------------------
-# Список комбинаций по 3 шара образованных  из выиграшных "6"
+#________________________ Список комбинаций по 3 шара образованных  из выиграшных "6"
 for comb in win_balls_6_comb_list:
     win_3_balls_combinations = combinations(comb, 3)
     for win_3_balls_combination in win_3_balls_combinations:
@@ -161,32 +158,33 @@ for comb in win_balls_6_comb_list:
             win_3_balls_lst.append(ball)
         win_balls_3_comb_list.append(win_3_balls_lst)
 
+# количество комбинаций в первичном списке
+print("win_balls_3_comb_list - %s" % len(win_balls_3_comb_list))
+# удаление дубликатов комбинаций
+win_balls_3_comb_list = unique_list(win_balls_3_comb_list)
+# количество комбинаций в уникальном списке
+print("win_balls_3_comb_list уменьшен до - %s" % len(win_balls_3_comb_list))
+
 
 # Файл со списком комбинаций по 3 шара образованных  из выиграшных "6"
 file3 = open("win_balls_3.csv", "w")
 out3 = csv.writer(file3, delimiter=',', quoting=csv.QUOTE_NONE)
 out3.writerow(["ball_1", "ball_2", "ball_3", "win_times"])
 
-# Пишем в файл комбинацию, количество раз ее выпадения
+# Пишем в файл
 for comb in win_balls_3_comb_list:
-    csv_row = []
-    for i in comb:
-        csv_row.append(i)
-    csv_row.append(win_balls_3_comb_list.count(comb))
-    # нужна нормализация
-    # csv_row.append(win_balls_3_comb_list.count(comb)/len(win_balls_3_comb_list * 100))]
-    out3.writerow(csv_row)
+    out3.writerow(comb)
 
 file3.close()
 
-# Сортировка комбинаций из 5 шаров по частоте выпадения
+# Сортировка комбинаций из 3 шаров по частоте выпадения
 win_balls_3 = pandas.read_csv('win_balls_3.csv', header=0)
 descending_win_balls_3 = win_balls_3.sort(["win_times"], ascending=[False])
 descending_win_balls_3.to_csv('win_balls_3.csv', index=False)
 
 # ------------------------------------------------------------------------
 
-#4. Все суммы выиграшных комбинаций "6"
+# 4. Все суммы выиграшных комбинаций "6"
 
 # Список всех сумм выиграшных комбинаций "6"
 for i in range(1, lottery.shape[0]):
@@ -211,6 +209,7 @@ balls_summ.close()
 
 # Сортировка сумм выиграшных "6" по частоте выпадения  и удаляем дубликаты
 ball_summs = pandas.read_csv('win_balls_summs.csv', header=0)
+# Удаляем дубликаты строк
 unique_ball_summs = ball_summs.drop_duplicates()
 descending_ball_summs = unique_ball_summs.sort(["win_times"], ascending=[False])
 descending_ball_summs.to_csv('win_balls_summs.csv', index=False)
